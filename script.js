@@ -1,38 +1,28 @@
-
-
 let container  = document.getElementById("container");
 let dynamicDiv = document.createElement('div');
 let clearButton = document.getElementById('clearButton');
-let turnCounter = 0;
-
 
 function createFirstGrid() {
-console.log("turnCounter at start of createFirstGrid(): " +  turnCounter);
-//console.log("sketchSpec in createFirstGrid: " + sketchSpec);
-  for (i=0; i<4; i++){
+  for (i=0; i<256; i++){
   let dynamicDiv = document.createElement('div');
   container.appendChild(dynamicDiv);
   dynamicDiv.classList.add("dynamicDiv");
   }
 }
 
-
 function createSubsequentGrid(sketchSpec) {
-    console.log("turnCounter at start of createSubsequentGrid(): " +  turnCounter);
-    console.log("sketchSpec in createSubsequentGrid function:" + sketchSpec);
 
     // delete previous grid
     console.log("dynamicDiv in createSubsequentGrid before deleting:" + dynamicDiv);
     container.innerHTML = '';
 
-
     //console.log("sketchSpec in createFirstGrid: " + sketchSpec);
-      for (i=0; i<sketchSpec; i++){
+    for (i=0; i<sketchSpec; i++){
       let dynamicDiv = document.createElement('div');
       container.appendChild(dynamicDiv);
       dynamicDiv.classList.add("dynamicDiv");
-      }
     }
+} // end function create subsequent grid
 
 function penEffect(){
   const sketchSquare = document.querySelectorAll('.dynamicDiv');
@@ -42,27 +32,19 @@ function penEffect(){
     }); // end event listener 'mouseover'
   });  // end 'for each' 
 
-    clearButton.onclick = function(){
+  clearButton.onclick = function(){
     sketchSquare.forEach((div) =>{
-    div.classList.remove('sketched');
+      div.classList.remove('sketched');
     }) // end for each
 
-    turnCounter++;
-   
     sketchSpecStart = prompt("How many squares per side do you want to make the new grid?");
-    
+    document.documentElement.style.setProperty('--grid-temp-dimensions', "repeat(" + sketchSpecStart + ", 1fr)");
+
     sketchSpec = sketchSpecStart * sketchSpecStart;
-    console.log("sketchSpec just before passing to createSubsequentGrid function: " + sketchSpec);
-
-   
-   
-
     createSubsequentGrid(sketchSpec);
     penEffect();
     
-  
-  }; // end onclick
-  
+  }; // end onclick  
 } // end funciton penEffect
 
 
