@@ -1,6 +1,8 @@
-let container  = document.getElementById("container");
+let container  = document.getElementById("sketchPadContainer");
 let dynamicDiv = document.createElement('div');
 let clearButton = document.getElementById('clearButton');
+let gridLinesToggle = document.getElementById("gridlinesButton");
+
 
 function createFirstGrid() {
   for (i=0; i<256; i++){
@@ -11,12 +13,10 @@ function createFirstGrid() {
 }
 
 function createSubsequentGrid(sketchSpec) {
-
     // delete previous grid
     console.log("dynamicDiv in createSubsequentGrid before deleting:" + dynamicDiv);
     container.innerHTML = '';
 
-    //console.log("sketchSpec in createFirstGrid: " + sketchSpec);
     for (i=0; i<sketchSpec; i++){
       let dynamicDiv = document.createElement('div');
       container.appendChild(dynamicDiv);
@@ -32,6 +32,13 @@ function penEffect(){
     }); // end event listener 'mouseover'
   });  // end 'for each' 
 
+  // toggle grid lines
+  gridLinesToggle.addEventListener('click', ()=>{
+    sketchSquare.forEach((div) => {
+      div.classList.toggle("gridlines");
+    });
+  });
+
   clearButton.onclick = function(){
     sketchSquare.forEach((div) =>{
       div.classList.remove('sketched');
@@ -43,21 +50,13 @@ function penEffect(){
     sketchSpec = sketchSpecStart * sketchSpecStart;
     createSubsequentGrid(sketchSpec);
     penEffect();
-    
   }; // end onclick  
 } // end funciton penEffect
-
 
 function playfirstGame (){
     createFirstGrid();
     penEffect();
 }
 
-
-
-
-
-
 playfirstGame();
 
-//newSetup();
